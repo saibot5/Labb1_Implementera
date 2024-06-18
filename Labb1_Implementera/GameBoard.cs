@@ -10,29 +10,33 @@ namespace Labb1_Implementera
     internal class GameBoard : IObserver
     {
         private Navy enemyNavy;
-
+        //store if map is supposed to display ships
+        private bool displayShips;
         //observer
-        public GameBoard(HitPostionList hitPostionList) 
+        public GameBoard(HitPostionList hitPostionList)
         {
             hitPostionList.RegisterObserver(this);
+            
+            
         }
 
         public void Update(List<Position> hitPositionList)
         {
             //Redraw Map
-            PrintMap(hitPositionList);
+            PrintMap(hitPositionList, displayShips);
         }
 
-        public void CreateMap(Navy navy)
+        public void CreateMap(Navy navy, bool displayShips)
         {
             
             enemyNavy = navy;
             List<Position> hitPositionList = new List<Position>();
-            PrintMap(hitPositionList);
+            this.displayShips = displayShips;
+            PrintMap(hitPositionList, displayShips);
         }
 
 
-        public void PrintMap(List<Position> hitList)
+        public void PrintMap(List<Position> hitList, bool displayShips)
         {
             Console.Clear();
             PrintHeader();
@@ -66,7 +70,7 @@ namespace Labb1_Implementera
                             keepGoing = false;
                         }
 
-                        if (enemyNavy.AllShipsPosition.Any(A => A.X == x && A.Y == y) && !hitList.Any(H => H.X == x && H.Y == y))
+                        if (displayShips && enemyNavy.AllShipsPosition.Any(A => A.X == x && A.Y == y) && !hitList.Any(H => H.X == x && H.Y == y))
                         {
                             Console.ForegroundColor = ConsoleColor.DarkGreen;
                             Console.Write("[O]");

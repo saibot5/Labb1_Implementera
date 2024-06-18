@@ -59,7 +59,7 @@ namespace Labb1_Implementera
 
 
 
-            map.CreateMap(enemyNavy);
+            map.CreateMap(enemyNavy,false);
 
             TakeTurns(enemyNavy, map, hitPostionList, Coordinates);
         }
