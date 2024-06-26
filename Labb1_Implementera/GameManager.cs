@@ -1,7 +1,9 @@
-﻿using Labb1_Implementera.Observer;
+﻿using Labb1_Implementera.Factories;
+using Labb1_Implementera.Observer;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -38,6 +40,24 @@ namespace Labb1_Implementera
 
         public void StartGame()
         {
+           
+           
+            Console.WriteLine("press 2 for cheat mode (visible enemy ships). press any other key to start regular mode");
+           
+        
+            
+            bool visibleShips;
+
+            if (Console.ReadKey().Key == ConsoleKey.D2) 
+            {
+                visibleShips = true;
+            }
+            else
+            {
+                visibleShips = false;
+            }
+            Console.Clear();
+
             HitPostionList hitPostionList = new HitPostionList();
             Navy enemyNavy = new Navy(hitPostionList);
             GameBoard map = new GameBoard(hitPostionList);
@@ -59,13 +79,15 @@ namespace Labb1_Implementera
 
 
 
-            map.CreateMap(enemyNavy,false);
+            map.CreateMap(enemyNavy, visibleShips);
 
             TakeTurns(enemyNavy, map, hitPostionList, Coordinates);
         }
 
         private void TakeTurns(Navy enemyNavy, GameBoard map, HitPostionList hitPostionList, Dictionary<char, int> coordinates)
         {
+            bool win = false;
+            int turnsTaken = 0;
             do
             {
                 //TODO Better message
@@ -76,8 +98,23 @@ namespace Labb1_Implementera
                 Position pos = TestInput(input, coordinates);
 
                 hitPostionList.Add(pos.X, pos.Y);
-            } while (true);
+                turnsTaken++;
+                int sunkenShips = 0;
+                foreach(Ship ship in enemyNavy.Ships)
+                {
+                    if (ship.isSunk == true)
+                    {
+                        sunkenShips++;
+                    }
+                }
+                if (sunkenShips == 5)
+                {
+                    win = true;
+                }
 
+            } while (!win);
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.WriteLine($"You won in {turnsTaken} turns");
         }
 
         private Position TestInput(string input, Dictionary<char, int> coordinates)
