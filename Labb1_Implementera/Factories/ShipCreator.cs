@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Labb1_Implementera.Factories
 {
-    //FACTORY
+    //SIMPLE FACTORY
     internal class ShipCreator
     {
         public Ship CreateShip(string type, HitPostionList hitPostionList)

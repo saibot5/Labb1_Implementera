@@ -7,7 +7,7 @@ namespace Labb1_Implementera
         /*
           Battleships
            Used patterns:
-           factory: Shipcreator
+           simple factory: Shipcreator
            singleton: gameManager
            observer: hitPositionlist
         */
