@@ -92,7 +92,7 @@ namespace Labb1_Implementera
             {
                 //TODO Better message
                 Console.ForegroundColor = ConsoleColor.White;
-                Console.WriteLine("Where to shoot?");
+                Console.WriteLine("Where do you want to shoot? (example d2)");
                 string input = Console.ReadLine();
                 //TODO add invalid target
                 Position pos = TestInput(input, coordinates);
